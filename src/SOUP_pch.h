@@ -15,6 +15,7 @@
 // Miscellaneous
 #include <SDL3/SDL.h>
 #include <glad/gl.h>
+#include <glm/glm.hpp>
 
 // SOUP
 #include <src/Log.h>

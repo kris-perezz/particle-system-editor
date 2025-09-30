@@ -49,22 +49,27 @@ find_package(OpenGL REQUIRED)
 
 
 set(SOUP_HEADER 
-    src/Shader.h
+    src/Renderer/Buffer.h
+    src/Renderer/Renderer.h
+    src/Renderer/Shader.h
+    src/Renderer/VertexArray.h
     src/Application.h
     src/GUI.h
-    src/Renderer.h
     src/Style.h
-    src/Window.h)
+    src/Window.h
+    src/Log.h)
 
 
 set(SOUP_SOURCE
-    src/Shader.cpp
+    src/Renderer/Buffer.cpp
+    src/Renderer/Renderer.cpp
+    src/Renderer/Shader.cpp
+    src/Renderer/VertexArray.cpp
     src/Application.cpp
     src/GUI.cpp
-    src/Renderer.cpp
     src/Style.cpp
-    src/GUICommands.cpp
-    src/Window.cpp)
+    src/Window.cpp
+    src/Log.cpp)
 
 add_subdirectory(include/glad)
 add_subdirectory(include/imgui)
@@ -77,6 +82,7 @@ target_precompile_headers(SOUP_Engine PRIVATE src/SOUP_pch.h)
 
 target_include_directories(
   SOUP_Engine 
+  PUBLIC ${SOUP_ROOT_PATH}
   PUBLIC ${SOUP_ROOT_PATH}/src
   PUBLIC ${SOUP_ROOT_PATH}/include)
 
@@ -97,8 +103,15 @@ add_executable(SOUP src/main.cpp)
 target_link_libraries(SOUP PRIVATE SOUP_Engine)
 
 if (WIN32)
-  set_target_properties(SOUP PROPERTIES WIN32_EXECUTABLE TRUE)
+  # Copy SDL3.dll next to the SOUP exe
+  add_custom_command(TARGET SOUP POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+      "$<TARGET_FILE:SDL3::SDL3>"
+      $<TARGET_FILE_DIR:SOUP>)
 
-    target_link_options(SOUP PRIVATE /ENTRY:mainCRTStartup)
-
+  # Optionally copy your data folder too
+  add_custom_command(TARGET SOUP POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+      "${CMAKE_SOURCE_DIR}/data"
+      "$<TARGET_FILE_DIR:SOUP>/data")
 endif()
