@@ -37,7 +37,16 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(glm)
 
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG v1.15.3
+)
+FetchContent_MakeAvailable(spdlog)
+
+
 find_package(OpenGL REQUIRED)
+
 
 set(SOUP_HEADER 
     src/Shader.h
@@ -75,6 +84,7 @@ target_link_libraries(
   SOUP_Engine 
   glad
   glm::glm
+  spdlog::spdlog_header_only
   imgui
   ImGuiFileDialog
   stb

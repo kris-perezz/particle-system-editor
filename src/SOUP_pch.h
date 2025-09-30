@@ -15,3 +15,6 @@
 // Miscellaneous
 #include <SDL3/SDL.h>
 #include <glad/gl.h>
+
+// SOUP
+#include <src/Log.h>
