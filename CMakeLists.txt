@@ -114,4 +114,10 @@ if (WIN32)
     COMMAND ${CMAKE_COMMAND} -E copy_directory
       "${CMAKE_SOURCE_DIR}/data"
       "$<TARGET_FILE_DIR:SOUP>/data")
+else() # linux
+  set(RUN_DATA_DIR ${CMAKE_BINARY_DIR}/data)
+  execute_process(COMMAND ${CMAKE_COMMAND} -E rm -rf "${RUN_DATA_DIR}")
+  execute_process(COMMAND ${CMAKE_COMMAND} -E create_symlink
+                          "${CMAKE_SOURCE_DIR}/data" "${RUN_DATA_DIR}")
+  target_include_directories(SOUP_Engine PUBLIC "${RUN_DATA_DIR}")
 endif()
