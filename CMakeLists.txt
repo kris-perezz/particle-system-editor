@@ -103,13 +103,11 @@ add_executable(SOUP src/main.cpp)
 target_link_libraries(SOUP PRIVATE SOUP_Engine)
 
 if (WIN32)
-  # Copy SDL3.dll next to the SOUP exe
   add_custom_command(TARGET SOUP POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different
       "$<TARGET_FILE:SDL3::SDL3>"
       $<TARGET_FILE_DIR:SOUP>)
 
-  # Optionally copy your data folder too
   add_custom_command(TARGET SOUP POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
       "${CMAKE_SOURCE_DIR}/data"
