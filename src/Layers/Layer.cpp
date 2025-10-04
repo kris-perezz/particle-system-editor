@@ -2,8 +2,8 @@
 
 namespace SOUP {
 
-Layer::Layer(const std::string &name) : m_debugName(name) {}
+  Layer::Layer(int priority) : m_priority(priority) {}
 
-const std::string &Layer::GetName() { return m_debugName; }
+  int Layer::getPriority() const { return m_priority; }
 
 } // namespace SOUP

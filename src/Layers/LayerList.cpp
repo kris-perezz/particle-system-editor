@@ -5,9 +5,9 @@
 namespace SOUP {
 
   LayerList::~LayerList() {
-    for (auto &layer_uptr : m_layers) {
-      if (layer_uptr)
-        layer_uptr->onDetach();
+    for (auto &l : m_layers) {
+      if (l)
+        l->onDetach();
     }
     m_layers.clear();
   }
@@ -17,7 +17,16 @@ namespace SOUP {
   void LayerList::PushOverlay(Layer *overlay) { PushOverlay(std::unique_ptr<Layer>(overlay)); }
 
   void LayerList::PushLayer(std::unique_ptr<Layer> layer) {
-    m_layers.emplace(m_layers.begin() + m_layerInsertIndex, std::move(layer));
+    const int priority = layer->getPriority();
+
+    auto start = m_layers.begin();
+    auto end   = m_layers.begin() + m_layerInsertIndex;
+
+    auto position =
+        std::upper_bound(start, end, priority, [](int i, const std::unique_ptr<Layer> &l) {
+          return i < l->getPriority();
+        });
+    m_layers.insert(position, std::move(layer));
     m_layerInsertIndex++;
   }
 
@@ -32,8 +41,8 @@ namespace SOUP {
     auto start = m_layers.begin();
     auto end   = m_layers.begin() + m_layerInsertIndex;
 
-    auto it = std::find_if(start, end, [layer](const std::unique_ptr<Layer> &layer_uptr) {
-      return layer_uptr.get() == layer;
+    auto it = std::find_if(start, end, [layer](const std::unique_ptr<Layer> &l) {
+      return l.get() == layer;
     });
 
     if (it != m_layers.begin() + m_layerInsertIndex) {
@@ -49,8 +58,8 @@ namespace SOUP {
     auto start = m_layers.begin() + m_layerInsertIndex;
     auto end   = m_layers.end();
 
-    auto it = std::find_if(start, end, [overlay](const std::unique_ptr<Layer> &layer_uptr) {
-      return layer_uptr.get() == overlay;
+    auto it = std::find_if(start, end, [overlay](const std::unique_ptr<Layer> &l) {
+      return l.get() == overlay;
     });
 
     if (it != m_layers.end()) {
