@@ -7,7 +7,7 @@
 namespace SOUP {
 class Layer : public EventListener {
 public:
-  Layer(const std::string &name = "Layer");
+  Layer(const std::string &name);
   virtual ~Layer() = default;
 
   virtual void onAttach() {}
@@ -15,10 +15,12 @@ public:
   virtual void onUpdate() {}
   virtual bool onEvent(const SDL_Event &event) = 0;
 
-  const std::string &GetName() const { return m_DebugName; }
+  const std::string &GetName();
 
 protected:
-  std::string m_DebugName;
+
+private:
+  std::string m_debugName;
 };
 
 } // namespace SOUP

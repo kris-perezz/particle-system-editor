@@ -1,51 +1,67 @@
 #include <src/Layers/LayerList.h>
 
+#include <algorithm>
+
 namespace SOUP {
-void LayerList::PushLayer(std::unique_ptr<Layer> layer) {
-  if (!layer)
-    return;
-  m_layers.insert(m_layers.begin() + m_layerInsertIndex, std::move(layer));
-}
 
-void LayerList::PushOverlay(std::unique_ptr<Layer> overlay) {
-  if (!overlay)
-    return;
-  m_layers.emplace_back(overlay);
-}
+  LayerList::~LayerList() {
+    for (auto &layer_uptr : m_layers) {
+      if (layer_uptr)
+        layer_uptr->onDetach();
+    }
+    m_layers.clear();
+  }
 
-std::unique_ptr<Layer> LayerList::PopLayer(Layer *layer) {
-  if (!layer)
-    return nullptr;
-  for (std::size_t i = 0; i < m_layerInsertIndex; i++) {
-    if (m_layers[i].get() == layer) {
-      auto temp = std::move(m_layers[i]);
-      temp->onDetach();
-      m_layers.erase(m_layers.begin() + i);
+  void LayerList::PushLayer(Layer *layer) { PushLayer(std::unique_ptr<Layer>(layer)); }
 
-      if (i < m_layerInsertIndex) {
-        m_layerInsertIndex--;
-      }
+  void LayerList::PushOverlay(Layer *overlay) { PushOverlay(std::unique_ptr<Layer>(overlay)); }
 
-      return std::move(temp);
+  void LayerList::PushLayer(std::unique_ptr<Layer> layer) {
+    m_layers.emplace(m_layers.begin() + m_layerInsertIndex, std::move(layer));
+    m_layerInsertIndex++;
+  }
+
+  void LayerList::PushOverlay(std::unique_ptr<Layer> overlay) {
+    m_layers.emplace_back(std::move(overlay));
+  }
+
+  void LayerList::PopLayer(Layer *layer) {
+    if (!layer)
+      return;
+
+    auto start = m_layers.begin();
+    auto end   = m_layers.begin() + m_layerInsertIndex;
+
+    auto it = std::find_if(start, end, [layer](const std::unique_ptr<Layer> &layer_uptr) {
+      return layer_uptr.get() == layer;
+    });
+
+    if (it != m_layers.begin() + m_layerInsertIndex) {
+      m_layers.erase(it);
+      m_layerInsertIndex--;
     }
   }
-}
 
-std::unique_ptr<Layer> LayerList::PopOverlay(Layer *overlay) {
-  if (!overlay)
-    return nullptr;
-  for (std::size_t i = m_layerInsertIndex; i < m_layers.size(); i++) {
-    if (m_layers[i].get() == overlay) {
-      auto temp = std::move(m_layers[i]);
-      temp->onDetach();
-      m_layers.erase(m_layers.begin() + i);
+  void LayerList::PopOverlay(Layer *overlay) {
+    if (!overlay)
+      return;
 
-      if (i < m_layerInsertIndex) {
-        m_layerInsertIndex--;
-      }
+    auto start = m_layers.begin() + m_layerInsertIndex;
+    auto end   = m_layers.end();
 
-      return std::move(temp);
+    auto it = std::find_if(start, end, [overlay](const std::unique_ptr<Layer> &layer_uptr) {
+      return layer_uptr.get() == overlay;
+    });
+
+    if (it != m_layers.end()) {
+      m_layers.erase(it);
     }
   }
-}
+
+  std::size_t LayerList::size() const noexcept { return m_layers.size(); }
+
+  Layer *LayerList::operator[](std::size_t i) noexcept { return m_layers[i].get(); }
+
+  Layer *LayerList::operator[](std::size_t i) const noexcept { return m_layers[i].get(); }
+
 } // namespace SOUP
