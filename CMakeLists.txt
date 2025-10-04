@@ -53,6 +53,8 @@ set(SOUP_HEADER
     src/Renderer/Renderer.h
     src/Renderer/Shader.h
     src/Renderer/VertexArray.h
+    src/Layers/Layer.h
+    src/Layers/LayerList.h
     src/Application.h
     src/GUI.h
     src/Style.h
@@ -65,6 +67,8 @@ set(SOUP_SOURCE
     src/Renderer/Renderer.cpp
     src/Renderer/Shader.cpp
     src/Renderer/VertexArray.cpp
+    src/Layers/Layer.cpp
+    src/Layers/LayerList.cpp
     src/Application.cpp
     src/GUI.cpp
     src/Style.cpp
