@@ -1,37 +1,45 @@
 #include <src/Events/Events.h>
 
 namespace SOUP {
-void EventsDispatcher::dispatch(const SDL_Event &event) {
-  for (auto &[priority, listeners] : m_listeners) {
-    for (auto *listener : listeners) {
-      if (listener->onEvent(event))
-        return;
+  void EventsDispatcher::dispatch(const Event &event) {
+    for (const auto &l : m_listeners) {
+      EventListener *eventListener = l.listener_ptr;
+      if (eventListener && eventListener->onEvent(event)) // if not null and if onEvent == true
+        break;
     }
   }
-}
 
-void EventsDispatcher::poll() {
-  SDL_Event event;
-  while (SDL_PollEvent(&event)) {
-    dispatch(event);
+  void EventsDispatcher::registerListener(EventListener *newListener) {
+    if (!newListener)
+      return;
+
+    auto start = m_listeners.begin();
+    auto end   = m_listeners.end();
+
+    const int p = newListener->getPriority();
+
+    auto duplicate = std::find_if(start, end, [newListener](Listener &l) {
+      return newListener == l.listener_ptr;
+    });
+    if (duplicate != end)
+      return;
+
+    auto position = std::find_if(start, end, [p](const Listener &l) { return p > l.getPriority() });
+    m_listeners.insert(position, Listener(p, newListener));
   }
-}
 
-void EventsDispatcher::registerListener(int priority, EventListener *listener) {
-  m_listeners[priority].push_back(listener);
-  LOG_INFO("Event listener with priority {} registered", priority);
-}
+  void EventsDispatcher::unregisterListener(EventListener *targetListener) {
+    if (!targetListener)
+      return;
 
-void EventsDispatcher::unregisterListener(EventListener *listener) {
-  for (auto &[priority, vec] : m_listeners) {
-    for (auto i = vec.begin(); i != vec.end();) {
-      if (*i == listener) {
-        i = vec.erase(i);
-      } else {
-        i++;
-      }
-    }
+    auto start = m_listeners.begin();
+    auto end   = m_listeners.end();
+
+    auto it = std::find_if(start, end, [targetListener](Listener &l) {
+      return targetListener == l.listener_ptr;
+    });
+    if (it != end)
+      m_listeners.erase(it);
   }
-  LOG_INFO("Event listener unregistered");
-}
+
 } // namespace SOUP
