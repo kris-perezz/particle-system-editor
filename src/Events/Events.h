@@ -1,20 +1,30 @@
+#pragma once
+
 #include <src/SOUP_pch.h>
 
+#include <src/Events/Event.h>
+
 namespace SOUP {
-class EventListener {
-public:
-  virtual bool onEvent(const SDL_Event &event) = 0;
-  virtual ~EventListener() = default;
-};
+  class EventListener {
+  public:
+    virtual ~EventListener() = default;
 
-class EventsDispatcher {
-public:
-  void dispatch(const SDL_Event &event);
-  void poll();
-  void registerListener(int priority, EventListener *listener);
-  void unregisterListener(EventListener *listener);
+    virtual bool onEvent(Event &event) = 0;
+    virtual int getPriority() const    = 0;
+  };
 
-private:
-  std::map<int, std::vector<EventListener *>, std::less<int>> m_listeners;
-};
+  class EventsDispatcher {
+  public:
+    void dispatch(const Event &event);
+    void registerListener(EventListener *newListener);
+    void unregisterListener(EventListener *targetListener);
+
+  private:
+    struct Listener {
+      int priority;
+      EventListener *listener_ptr;
+    };
+
+    std::vector<Listener> m_listeners;
+  };
 } // namespace SOUP

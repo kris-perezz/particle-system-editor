@@ -5,22 +5,21 @@
 #include <src/Events/Events.h>
 
 namespace SOUP {
-class Layer : public EventListener {
-public:
-  Layer(const std::string &name);
-  virtual ~Layer() = default;
+  class Layer : public EventListener {
+  public:
+    Layer(int priority);
+    virtual ~Layer() = default;
 
-  virtual void onAttach() {}
-  virtual void onDetach() {}
-  virtual void onUpdate() {}
-  virtual bool onEvent(const SDL_Event &event) = 0;
+    virtual void onAttach() {}
+    virtual void onDetach() {}
+    virtual void onUpdate() {}
+    virtual bool onEvent(Event &event) = 0;
 
-  const std::string &GetName();
+    virtual int getPriority() const = 0;
 
-protected:
-
-private:
-  std::string m_debugName;
-};
+  protected:
+  private:
+    int m_priority;
+  };
 
 } // namespace SOUP
