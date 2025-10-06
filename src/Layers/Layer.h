@@ -1,5 +1,6 @@
 #pragma once
 
+#include "DeltaTime.h"
 #include <src/SOUP_pch.h>
 
 #include <src/Events/Events.h>
@@ -12,10 +13,10 @@ namespace SOUP {
 
     virtual void onAttach() {}
     virtual void onDetach() {}
-    virtual void onUpdate(float deltaTime) {}
+    virtual void onUpdate(DeltaTime deltaTime) {}
     virtual bool onEvent(const Event &event) = 0;
 
-    virtual int getPriority() const = 0;
+    int getPriority() const;
 
   protected:
   private:

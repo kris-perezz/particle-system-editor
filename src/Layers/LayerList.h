@@ -11,14 +11,14 @@ namespace SOUP {
     LayerList() = default;
     ~LayerList();
 
-    void PushLayer(std::unique_ptr<Layer> layer);
-    void PushOverlay(std::unique_ptr<Layer> overlay);
+    void pushLayer(std::unique_ptr<Layer> layer);
+    void pushOverlay(std::unique_ptr<Layer> overlay);
 
-    void PushLayer(Layer *layer);
-    void PushOverlay(Layer *overlay);
+    void pushLayer(Layer *layer);
+    void pushOverlay(Layer *overlay);
 
-    void PopLayer(Layer *layer);
-    void PopOverlay(Layer *overlay);
+    void popLayer(Layer *layer);
+    void popOverlay(Layer *overlay);
 
     ListOfLayers::iterator begin() { return m_layers.begin(); }
     ListOfLayers::iterator end() { return m_layers.end(); }

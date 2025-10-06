@@ -13,11 +13,11 @@ namespace SOUP {
     m_layers.clear();
   }
 
-  void LayerList::PushLayer(Layer *layer) { PushLayer(std::unique_ptr<Layer>(layer)); }
+  void LayerList::pushLayer(Layer *layer) { pushLayer(std::unique_ptr<Layer>(layer)); }
 
-  void LayerList::PushOverlay(Layer *overlay) { PushOverlay(std::unique_ptr<Layer>(overlay)); }
+  void LayerList::pushOverlay(Layer *overlay) { pushOverlay(std::unique_ptr<Layer>(overlay)); }
 
-  void LayerList::PushLayer(std::unique_ptr<Layer> layer) {
+  void LayerList::pushLayer(std::unique_ptr<Layer> layer) {
     const int priority = layer->getPriority();
 
     auto start = m_layers.begin();
@@ -31,11 +31,11 @@ namespace SOUP {
     m_layerInsertIndex++;
   }
 
-  void LayerList::PushOverlay(std::unique_ptr<Layer> overlay) {
+  void LayerList::pushOverlay(std::unique_ptr<Layer> overlay) {
     m_layers.emplace_back(std::move(overlay));
   }
 
-  void LayerList::PopLayer(Layer *layer) {
+  void LayerList::popLayer(Layer *layer) {
     if (!layer) {
       return;
     }
@@ -53,7 +53,7 @@ namespace SOUP {
     }
   }
 
-  void LayerList::PopOverlay(Layer *overlay) {
+  void LayerList::popOverlay(Layer *overlay) {
     if (!overlay)
       return;
 
@@ -68,7 +68,5 @@ namespace SOUP {
       m_layers.erase(it);
     }
   }
-
-
 
 } // namespace SOUP
