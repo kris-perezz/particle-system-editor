@@ -2,6 +2,7 @@
 
 namespace SOUP {
   void EventsDispatcher::dispatch(const Event &event) {
+    LOG_INFO("sending to listener...");
     for (const auto &l : m_listeners) {
       EventListener *eventListener = l.listener_ptr;
       if (eventListener && eventListener->onEvent(event)) { // if not null and if onEvent == true

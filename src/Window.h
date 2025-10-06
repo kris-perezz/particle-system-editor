@@ -3,48 +3,51 @@
 #include <src/SOUP_pch.h>
 
 namespace SOUP {
-struct WindowProperties {
-  std::string title;
-  uint32_t width;
-  uint32_t height;
-  bool vsync;
-  bool fullscreen;
+  struct WindowProperties {
+    std::string title;
+    int width;
+    int height;
+    bool vsync;
+    bool fullscreen;
 
-  WindowProperties(const std::string title = "Particle System Editor",
-                   uint32_t width = 1280,
-                   uint32_t height = 720,
-                   bool vsync = false,
-                   bool fullscreen = false) {
-    this->title = title;
-    this->width = width;
-    this->height = height;
-    this->vsync = vsync;
-    this->fullscreen = fullscreen;
+    WindowProperties(const std::string title = "Particle System Editor",
+                     int width          = 1280,
+                     int height         = 720,
+                     bool vsync              = false,
+                     bool fullscreen         = false) {
+      this->title      = title;
+      this->width      = width;
+      this->height     = height;
+      this->vsync      = vsync;
+      this->fullscreen = fullscreen;
+    };
   };
-};
 
-class Window {
-public:
-  Window(const WindowProperties &properties);
+  class Window {
+  public:
+    Window(const WindowProperties &properties);
 
-  ~Window();
+    ~Window();
 
-  void onUpdate();
+    void onUpdate();
 
-  uint32_t getWidth();
-  uint32_t getHeight();
+    int getWidth();
+    int getHeight();
 
-  bool isVsyncOn();
+    bool isVsyncOn();
 
-  void setVsync(bool on);
+    void setVsync(bool on);
 
-private:
-  void init(const WindowProperties &properties);
+    SDL_Window *getSDLWindow();
+    SDL_GLContext getContext() const;
 
-  void shutdown();
-  SDL_Window *m_window;
-  SDL_GLContext m_context;
+  private:
+    void init(const WindowProperties &properties);
 
-  WindowProperties m_windowProperties;
-};
+    void shutdown();
+    SDL_Window *m_window;
+    SDL_GLContext m_context;
+
+    WindowProperties m_windowProperties;
+  };
 } // namespace SOUP
