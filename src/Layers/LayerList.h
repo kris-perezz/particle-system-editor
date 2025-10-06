@@ -20,9 +20,15 @@ namespace SOUP {
     void PopLayer(Layer *layer);
     void PopOverlay(Layer *overlay);
 
-    std::size_t size() const noexcept;
-    Layer *operator[](std::size_t i) noexcept;
-    Layer *operator[](std::size_t i) const noexcept;
+    ListOfLayers::iterator begin() { return m_layers.begin(); }
+    ListOfLayers::iterator end() { return m_layers.end(); }
+    ListOfLayers::reverse_iterator rbegin() { return m_layers.rbegin(); }
+    ListOfLayers::reverse_iterator rend() { return m_layers.rend(); }
+
+    ListOfLayers::const_iterator begin() const { return m_layers.begin(); }
+    ListOfLayers::const_iterator end() const { return m_layers.end(); }
+    ListOfLayers::const_reverse_iterator rbegin() const { return m_layers.rbegin(); }
+    ListOfLayers::const_reverse_iterator rend() const { return m_layers.rend(); }
 
   private:
     ListOfLayers m_layers;

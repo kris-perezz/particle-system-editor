@@ -6,8 +6,9 @@ namespace SOUP {
 
   LayerList::~LayerList() {
     for (auto &l : m_layers) {
-      if (l)
+      if (l) {
         l->onDetach();
+      }
     }
     m_layers.clear();
   }
@@ -35,8 +36,9 @@ namespace SOUP {
   }
 
   void LayerList::PopLayer(Layer *layer) {
-    if (!layer)
+    if (!layer) {
       return;
+    }
 
     auto start = m_layers.begin();
     auto end   = m_layers.begin() + m_layerInsertIndex;
@@ -67,10 +69,6 @@ namespace SOUP {
     }
   }
 
-  std::size_t LayerList::size() const noexcept { return m_layers.size(); }
 
-  Layer *LayerList::operator[](std::size_t i) noexcept { return m_layers[i].get(); }
-
-  Layer *LayerList::operator[](std::size_t i) const noexcept { return m_layers[i].get(); }
 
 } // namespace SOUP
