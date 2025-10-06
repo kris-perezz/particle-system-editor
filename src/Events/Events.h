@@ -9,7 +9,7 @@ namespace SOUP {
   public:
     virtual ~EventListener() = default;
 
-    virtual bool onEvent(Event &event) = 0;
+    virtual bool onEvent(const Event &event) = 0;
     virtual int getPriority() const    = 0;
   };
 
