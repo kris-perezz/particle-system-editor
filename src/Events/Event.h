@@ -6,7 +6,7 @@
 #include <src/Inputs/MouseCodes.h>
 
 namespace SOUP {
-  enum class EventType {
+  enum class EventType : uint8_t{
     None = 0,
     WindowClose,
     WindowResize,

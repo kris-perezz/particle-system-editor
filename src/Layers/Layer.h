@@ -12,8 +12,8 @@ namespace SOUP {
 
     virtual void onAttach() {}
     virtual void onDetach() {}
-    virtual void onUpdate() {}
-    virtual bool onEvent(Event &event) = 0;
+    virtual void onUpdate(float deltaTime) {}
+    virtual bool onEvent(const Event &event) = 0;
 
     virtual int getPriority() const = 0;
 

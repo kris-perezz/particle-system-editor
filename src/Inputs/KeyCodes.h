@@ -29,18 +29,24 @@ namespace SOUP {
   constexpr KeyModifier mapSDLMods(SDL_Keymod currentMod) {
     KeyModifier mods = KeyModifier::None;
 
-    if (currentMod & SDL_KMOD_SHIFT)
+    if (currentMod & SDL_KMOD_SHIFT) {
       mods |= KeyModifier::Shift;
-    if (currentMod & SDL_KMOD_CTRL)
+    }
+    if (currentMod & SDL_KMOD_CTRL) {
       mods |= KeyModifier::Ctrl;
-    if (currentMod & SDL_KMOD_ALT)
+    }
+    if (currentMod & SDL_KMOD_ALT) {
       mods |= KeyModifier::Alt;
-    if (currentMod & SDL_KMOD_GUI)
+    }
+    if (currentMod & SDL_KMOD_GUI) {
       mods |= KeyModifier::Super;
-    if (currentMod & SDL_KMOD_CAPS)
+    }
+    if (currentMod & SDL_KMOD_CAPS) {
       mods |= KeyModifier::Caps;
-    if (currentMod & SDL_KMOD_NUM)
+    }
+    if (currentMod & SDL_KMOD_NUM) {
       mods |= KeyModifier::Num;
+    }
 
     return mods;
   }

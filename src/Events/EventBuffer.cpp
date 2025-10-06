@@ -1,3 +1,4 @@
+#include "Events/Event.h"
 #include <src/Events/EventBuffer.h>
 
 namespace SOUP {
@@ -10,18 +11,18 @@ namespace SOUP {
     }
 
     m_head = (m_head + 1) % m_maxCapacity;
-
     m_full = m_head == m_tail;
   }
 
-  std::optional<Event> EventBuffer::dequeue() {
+  Event EventBuffer::dequeue() {
     if (isEmpty()) {
       return {};
     }
 
-    auto event = m_buffer[m_tail];
-    m_full     = false;
-    m_tail     = (m_tail + 1) % m_maxCapacity;
+    Event event = m_buffer[m_tail];
+
+    m_full = false;
+    m_tail = (m_tail + 1) % m_maxCapacity;
 
     return event;
   }

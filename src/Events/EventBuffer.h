@@ -8,10 +8,11 @@ namespace SOUP {
   public:
     EventBuffer(std::size_t capacity)
         : m_buffer(std::unique_ptr<Event[]>(new Event[capacity])), m_maxCapacity(capacity) {}
+
     ~EventBuffer() = default;
 
     void enqueue(Event event);
-    std::optional<Event> dequeue();
+    Event dequeue();
 
     void flush();
     bool isEmpty() const;
