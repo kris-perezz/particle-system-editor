@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 4.1.1)
 
 project(SOUP VERSION 1.0)
 
@@ -33,7 +33,7 @@ endif()
 FetchContent_Declare(
   glm
   GIT_REPOSITORY https://github.com/g-truc/glm.git
-  GIT_TAG 1.0.1
+  GIT_TAG f7485100cb16498f202f64d21b567c3788efa234
 )
 FetchContent_MakeAvailable(glm)
 
@@ -56,10 +56,16 @@ set(SOUP_HEADER
     src/Layers/Layer.h
     src/Layers/LayerList.h
     src/Application.h
+    src/Events/Event.h
+    src/Events/EventBuffer.h
+    src/Events/Events.h
     src/GUI.h
     src/Style.h
     src/Window.h
-    src/Log.h)
+    src/Log.h
+    src/Timer.h
+    src/DeltaTime.h
+    src/EngineTime.h)
 
 
 set(SOUP_SOURCE
@@ -69,6 +75,9 @@ set(SOUP_SOURCE
     src/Renderer/VertexArray.cpp
     src/Layers/Layer.cpp
     src/Layers/LayerList.cpp
+    src/Events/Event.cpp
+    src/Events/EventBuffer.cpp
+    src/Events/Events.cpp
     src/Application.cpp
     src/GUI.cpp
     src/Style.cpp
@@ -123,3 +132,43 @@ else() # linux
                           "${CMAKE_SOURCE_DIR}/data" "${RUN_DATA_DIR}")
   target_include_directories(SOUP_Engine PUBLIC "${RUN_DATA_DIR}")
 endif()
+
+
+# SECTION FOR CLANGD COMPATIBILITY BECAUSE ITS SO USEFUL BUT SO DAMN FUSSY
+
+set(PREFIX_HEADER "${CMAKE_SOURCE_DIR}/src/SOUP_pch.h")
+set(CLANG_PCH_OUTPUT "${CMAKE_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/SOUP_Engine.dir/cmake_pch.hxx.pch")
+
+# collect include directories from SOUP_Engine target
+get_target_property(_inc_dirs SOUP_Engine INCLUDE_DIRECTORIES)
+
+# add include paths for subprojects that don't propagate automatically
+list(APPEND _inc_dirs
+  "${CMAKE_SOURCE_DIR}/include/glad/include"
+  "${CMAKE_SOURCE_DIR}/include/imgui"
+  "${CMAKE_SOURCE_DIR}/include/ImGuiFileDialog"
+  "${CMAKE_SOURCE_DIR}/include/stb"
+  "${CMAKE_SOURCE_DIR}/include/dirent"
+  "${CMAKE_BINARY_DIR}/data"
+)
+
+# flatten into -I flags
+set(_clang_includes "")
+foreach(dir ${_inc_dirs})
+  list(APPEND _clang_includes -I${dir})
+endforeach()
+
+# create fake Clang-compatible PCH
+add_custom_command(
+  OUTPUT "${CLANG_PCH_OUTPUT}"
+  COMMAND clang++ -std=c++23
+          -x c++-header
+          ${_clang_includes}
+          ${PREFIX_HEADER}
+          -Xclang -emit-pch
+          -o ${CLANG_PCH_OUTPUT}
+  COMMENT "Creating Clang precompiled header for clangd/clang-tidy."
+)
+
+add_custom_target(clang-pch ALL DEPENDS ${CLANG_PCH_OUTPUT})
+add_dependencies(SOUP_Engine clang-pch)
