@@ -6,6 +6,7 @@
 #include <src/Events/EventBuffer.h>
 #include <src/Layers/Layer.h>
 #include <src/Layers/LayerList.h>
+#include <src/Editor/TestLayer.h>
 
 namespace SOUP {
 
@@ -24,7 +25,10 @@ namespace SOUP {
     m_window = std::make_unique<SOUP::Window>(properties);
 
     m_GUI = new GUI;
+
     pushLayer(m_GUI);
+    pushLayer(new Test());
+
   }
 
   Application::~Application() {}

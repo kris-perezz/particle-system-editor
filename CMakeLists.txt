@@ -66,7 +66,8 @@ set(SOUP_HEADER
     src/Timer.h
     src/DeltaTime.h
     src/EngineTime.h
-    src/Camera.h)
+    src/Camera.h
+    src/Editor/TestLayer.h)
 
 
 set(SOUP_SOURCE
@@ -84,7 +85,8 @@ set(SOUP_SOURCE
     src/Style.cpp
     src/Window.cpp
     src/Log.cpp
-    src/Camera.cpp)
+    src/Camera.cpp
+    src/Editor/TestLayer.cpp)
 
 add_subdirectory(include/glad)
 add_subdirectory(include/imgui)
