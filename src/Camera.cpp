@@ -75,6 +75,17 @@ namespace SOUP {
   glm::vec3 Camera::rotation() const { return {m_yaw, m_pitch, m_roll}; }
 
   float Camera::speed() const { return m_cameraSpeed; }
+  
+  float Camera::sensitivity() const
+  {
+   return m_cameraSensitivity; 
+  }
+  
+  
+  float Camera::aspectRatio() const
+  {
+    return m_aspectRatio;
+  }
 
   const glm::mat4 &Camera::projectionMatrix() const { return m_projection; }
 

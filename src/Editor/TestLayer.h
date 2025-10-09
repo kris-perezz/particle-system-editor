@@ -1,5 +1,6 @@
 #pragma once
 
+#include "CameraController.h"
 #include "Renderer/Shader.h"
 #include "Renderer/VertexArray.h"
 #include <src/SOUP_pch.h>
@@ -11,7 +12,7 @@
 namespace SOUP {
   class Test : public Layer {
   public:
-    Test() : Layer(50), m_camera(CameraType::Orthographic) {}
+    Test() : Layer(50), m_camera(CameraType::Orthographic), m_cameraController(m_camera){}
     ~Test() = default;
     void onAttach() override;
     void onDetach() override;
@@ -25,6 +26,7 @@ namespace SOUP {
     std::shared_ptr<VertexArray> vao;
     std::shared_ptr<Shader> shader;
     Camera m_camera;
+    CameraController m_cameraController;
 
     glm::vec3 m_cameraPosition;
   };

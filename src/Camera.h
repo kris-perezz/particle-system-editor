@@ -32,6 +32,7 @@ namespace SOUP {
     glm::vec3 rotation() const;
     float speed() const;
     float sensitivity() const;
+    float aspectRatio() const;
 
     const glm::mat4 &projectionMatrix() const;
     const glm::mat4 &viewMatrix() const;

@@ -14,6 +14,7 @@
 #include <src/Inputs/Input.h>
 
 #include <src/Camera.h>
+#include <src/CameraController.h>
 
 namespace SOUP {
   void Test::onAttach() {
@@ -64,11 +65,14 @@ namespace SOUP {
     m_cameraPosition = {0.2f, 0.2f, 0.2f};
     m_camera.setPosition(m_cameraPosition);
     m_camera.setSpeed(5.0f);
+
   }
 
   void Test::onDetach() {}
 
   void Test::onUpdate(DeltaTime deltaTime) {
+
+    m_cameraController.onUpdate(deltaTime);
 
     RenderCommand::setClearColour({0.1f, 0.1f, 0.1f, 1.0f});
     RenderCommand::clear();
@@ -77,27 +81,14 @@ namespace SOUP {
 
     LOG_INFO("cleared viewport");
 
-    float step = m_camera.speed() * (float)deltaTime; // world units per second
-    if (Input::isKeyHeld(Key::W)) {
-      m_cameraPosition.y += step;
-    }
-    if (Input::isKeyHeld(Key::S)) {
-      m_cameraPosition.y -= step;
-    }
-    if (Input::isKeyHeld(Key::D)) {
-      m_cameraPosition.x += step;
-    }
-    if (Input::isKeyHeld(Key::A)) {
-      m_cameraPosition.x -= step;
-    }
-
-    m_camera.setPosition(m_cameraPosition);
 
     // Draw triangle
     Renderer::submit(shader, vao);
     LOG_INFO("drawed Index");
   }
 
-  bool Test::onEvent(const Event &event) { return false; }
+  bool Test::onEvent(const Event &event) { 
+    m_cameraController.onEvent(event);
+    return false; }
 
 } // namespace SOUP
