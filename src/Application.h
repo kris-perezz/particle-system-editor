@@ -34,6 +34,7 @@ namespace SOUP {
     Window &getWindow();
 
   private:
+    bool onWindowResize(const Event &event);
     LayerList m_layerList;
     EventsDispatcher m_eventsDispatcher;
     EventBuffer m_eventBuffer{512};

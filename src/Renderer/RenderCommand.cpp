@@ -1,3 +1,4 @@
+#include "SOUP_pch.h"
 #include <src/Renderer/RenderCommand.h>
 
 namespace SOUP {
@@ -7,6 +8,11 @@ void RenderCommand::clear() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
 
 void RenderCommand::drawIndexed(const std::shared_ptr<VertexArray> &vertexArray) {
   glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
+}
+
+void RenderCommand::setViewport(int width, int height)
+{
+  glViewport(0,0,width,height);
 }
 
 } // namespace SOUP

@@ -1,3 +1,5 @@
+#include "Events/Event.h"
+#include <SDL3/SDL_video.h>
 #include <src/Window.h>
 
 namespace SOUP {
@@ -53,11 +55,27 @@ namespace SOUP {
     LOG_INFO("SDL Quit");
   }
 
+  bool Window::onEvent(const Event &event) {
+    if (event.header.type == EventType::WindowResize) {
+      return onWindowResize(event);
+    }
+    return false;
+  }
+
+  int Window::getPriority() const { return 99; }
+
   void Window::onUpdate() { SDL_GL_SwapWindow(m_window); }
 
   int Window::getWidth() { return m_windowProperties.width; }
 
   int Window::getHeight() { return m_windowProperties.height; }
+
+  glm::vec2 Window::getPixelDimensions() {
+    int width;
+    int height;
+    SDL_GetWindowSizeInPixels(m_window, &width, &height);
+    return {width, height};
+  }
 
   bool Window::isVsyncOn() { return m_windowProperties.vsync; }
 
@@ -69,6 +87,17 @@ namespace SOUP {
       m_windowProperties.vsync = false;
       SDL_GL_SetSwapInterval(0);
     }
+  }
+
+  bool Window::onWindowResize(const Event &event) {
+    int newWidth  = event.windowResize.width;
+    int newHeight = event.windowResize.height;
+
+    m_windowProperties.width = newWidth;
+    m_windowProperties.width = newHeight;
+
+    LOG_INFO("Resized window");
+    return false;
   }
 
   SDL_Window *Window::getSDLWindow() { return m_window; }

@@ -9,5 +9,6 @@ public:
   static void setClearColour(const glm::vec4 &colour);
   static void clear();
   static void drawIndexed(const std::shared_ptr<VertexArray> &vertexArray);
+  static void setViewport(int width, int height);
 };
 } // namespace SOUP

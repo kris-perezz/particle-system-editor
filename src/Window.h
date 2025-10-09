@@ -1,5 +1,9 @@
 #pragma once
 
+#include "Events/Event.h"
+#include "Events/Events.h"
+#include "Log.h"
+#include "glm/fwd.hpp"
 #include <src/SOUP_pch.h>
 
 namespace SOUP {
@@ -23,16 +27,20 @@ namespace SOUP {
     };
   };
 
-  class Window {
+  class Window : public EventListener {
   public:
     Window(const WindowProperties &properties);
 
     ~Window();
 
+    bool onEvent(const Event &event) override;
+    int getPriority() const override;
+
     void onUpdate();
 
     int getWidth();
     int getHeight();
+    glm::vec2 getPixelDimensions();
 
     bool isVsyncOn();
 
@@ -40,9 +48,11 @@ namespace SOUP {
 
     SDL_Window *getSDLWindow();
     SDL_GLContext getContext() const;
-
+    
   private:
     void init(const WindowProperties &properties);
+
+    bool onWindowResize(const Event &event);
 
     void shutdown();
     SDL_Window *m_window;

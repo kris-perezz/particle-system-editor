@@ -2,10 +2,7 @@
 #include "Events/Event.h"
 
 namespace SOUP {
-  CameraController::CameraController(Camera &camera) : m_camera(camera)
-  {
-    
-  }
+  CameraController::CameraController(Camera &camera) : m_camera(camera) {}
 
   void CameraController::onUpdate(DeltaTime deltaTime) {
     float step = m_camera.speed() * (float)deltaTime;

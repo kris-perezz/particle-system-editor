@@ -1,4 +1,5 @@
 #include "Inputs/InputSystem.h"
+#include "Renderer/RenderCommand.h"
 #include "imgui_impl_sdl3.h"
 #include <src/Application.h>
 #include <src/DeltaTime.h>
@@ -25,6 +26,9 @@ namespace SOUP {
     WindowProperties properties = {};
 
     m_window = std::make_unique<SOUP::Window>(properties);
+    m_eventsDispatcher.registerListener(m_window.get());
+
+    RenderCommand::setViewport(m_window->getPixelDimensions().x, m_window->getPixelDimensions().y);
 
     m_GUI = new GUI;
 
@@ -88,7 +92,6 @@ namespace SOUP {
 
     if (event.header.category == EventCategory::Application) {
       if (event.header.type == EventType::Quit) {
-
         m_isRunning = false;
         return true;
       }
@@ -96,6 +99,10 @@ namespace SOUP {
 
     if (event.header.type == EventType::WindowLostFocus) {
       m_input.reset();
+    }
+
+    if (event.header.type == EventType::WindowResize) {
+      return onWindowResize(event);
     }
     return false;
   }
@@ -129,5 +136,11 @@ namespace SOUP {
   Application &Application::get() { return *s_Instance; }
 
   Window &Application::getWindow() { return *m_window; }
+  
+  bool Application::onWindowResize(const Event &event)
+  {
+    RenderCommand::setViewport(m_window->getPixelDimensions().x, m_window->getPixelDimensions().y);
+    return false;
+  }
 
 } // namespace SOUP
