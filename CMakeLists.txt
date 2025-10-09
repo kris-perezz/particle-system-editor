@@ -51,6 +51,7 @@ find_package(OpenGL REQUIRED)
 set(SOUP_HEADER 
     src/Renderer/Buffer.h
     src/Renderer/Renderer.h
+    src/Renderer/RenderCommand.h
     src/Renderer/Shader.h
     src/Renderer/VertexArray.h
     src/Layers/Layer.h
@@ -59,6 +60,10 @@ set(SOUP_HEADER
     src/Events/Event.h
     src/Events/EventBuffer.h
     src/Events/Events.h
+    src/Inputs/Input.h
+    src/Inputs/InputSystem.h
+    src/Inputs/KeyCodes.h
+    src/Inputs/MouseCodes.h
     src/GUI.h
     src/Style.h
     src/Window.h
@@ -73,6 +78,7 @@ set(SOUP_HEADER
 set(SOUP_SOURCE
     src/Renderer/Buffer.cpp
     src/Renderer/Renderer.cpp
+    src/Renderer/RenderCommand.cpp
     src/Renderer/Shader.cpp
     src/Renderer/VertexArray.cpp
     src/Layers/Layer.cpp
@@ -80,6 +86,8 @@ set(SOUP_SOURCE
     src/Events/Event.cpp
     src/Events/EventBuffer.cpp
     src/Events/Events.cpp
+    src/Inputs/Input.cpp
+    src/Inputs/InputSystem.cpp
     src/Application.cpp
     src/GUI.cpp
     src/Style.cpp

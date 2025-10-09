@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Inputs/InputSystem.h"
 #include <src/SOUP_pch.h>
 
 #include <src/Events/Event.h>
@@ -46,6 +47,8 @@ namespace SOUP {
     static Application *s_Instance;
 
     GUI *m_GUI = nullptr;
+
+    InputSystem m_input;
   };
 
   Application *CreateApplication();

@@ -4,12 +4,14 @@
 
 #include <src/Editor/TestLayer.h>
 
-#include <Events/Event.h>
 #include "Renderer/Buffer.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Shader.h"
+#include <Events/Event.h>
+#include <Renderer/RenderCommand.h>
 #include <SDL3/SDL_video.h>
 
+#include <src/Inputs/Input.h>
 
 #include <src/Camera.h>
 
@@ -58,32 +60,44 @@ namespace SOUP {
     std::string vPath = std::string(base) + "data/basic.vert";
     std::string fPath = std::string(base) + "data/basic.frag";
 
-    shader = std::make_shared<Shader>(vPath.c_str(), fPath.c_str());
+    shader           = std::make_shared<Shader>(vPath.c_str(), fPath.c_str());
+    m_cameraPosition = {0.2f, 0.2f, 0.2f};
+    m_camera.setPosition(m_cameraPosition);
+    m_camera.setSpeed(5.0f);
   }
 
-  void Test::onDetach() {
-
-  }
+  void Test::onDetach() {}
 
   void Test::onUpdate(DeltaTime deltaTime) {
 
-    Renderer renderer;
-    renderer.setClearColour({0.1f, 0.1f, 0.1f, 1.0f});
-    renderer.clear();
+    RenderCommand::setClearColour({0.1f, 0.1f, 0.1f, 1.0f});
+    RenderCommand::clear();
+
+    Renderer::beginScene(m_camera);
+
     LOG_INFO("cleared viewport");
 
+    float step = m_camera.speed() * (float)deltaTime; // world units per second
+    if (Input::isKeyHeld(Key::W)) {
+      m_cameraPosition.y += step;
+    }
+    if (Input::isKeyHeld(Key::S)) {
+      m_cameraPosition.y -= step;
+    }
+    if (Input::isKeyHeld(Key::D)) {
+      m_cameraPosition.x += step;
+    }
+    if (Input::isKeyHeld(Key::A)) {
+      m_cameraPosition.x -= step;
+    }
+
+    m_camera.setPosition(m_cameraPosition);
+
     // Draw triangle
-    shader->bind();
-    vao->bind();
-    LOG_INFO("bind");
-    renderer.drawIndexed(vao);
+    Renderer::submit(shader, vao);
     LOG_INFO("drawed Index");
-
-
   }
 
-  bool Test::onEvent(const Event &event) {
-    return false;
-  }
+  bool Test::onEvent(const Event &event) { return false; }
 
 } // namespace SOUP

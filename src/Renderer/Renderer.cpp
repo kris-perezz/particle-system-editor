@@ -1,12 +1,22 @@
+#include <Renderer/RenderCommand.h>
+#include <src/Camera.h>
 #include <src/Renderer/Renderer.h>
 
 namespace SOUP {
-void Renderer::setClearColour(const glm::vec4 &colour) { glClearColor(colour.r, colour.g, colour.b, colour.a); }
+  Renderer::SceneData *Renderer::m_sceneData = new Renderer::SceneData;
 
-void Renderer::clear() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+  void Renderer::beginScene(Camera &camera) {
+    m_sceneData->ViewProjectionMatrix = camera.viewProjectionMatrix();
+  }
 
-void Renderer::drawIndexed(const std::shared_ptr<VertexArray> &vertexArray) {
-  glDrawElements(GL_TRIANGLES, vertexArray->getIndexBuffer()->getCount(), GL_UNSIGNED_INT, nullptr);
-}
+  void Renderer::endScene() {}
 
+  void Renderer::submit(const std::shared_ptr<Shader> &shader,
+                        const std::shared_ptr<VertexArray> &vertexArray) {
+    shader->bind();
+    shader->uploadUniformMat4("u_viewProjection", m_sceneData->ViewProjectionMatrix);
+
+    vertexArray->bind();
+    RenderCommand::drawIndexed(vertexArray);
+  }
 } // namespace SOUP

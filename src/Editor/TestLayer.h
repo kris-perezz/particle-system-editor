@@ -26,5 +26,6 @@ namespace SOUP {
     std::shared_ptr<Shader> shader;
     Camera m_camera;
 
+    glm::vec3 m_cameraPosition;
   };
 } // namespace SOUP

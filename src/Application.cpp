@@ -1,12 +1,14 @@
+#include "Inputs/InputSystem.h"
 #include "imgui_impl_sdl3.h"
 #include <src/Application.h>
 #include <src/DeltaTime.h>
+#include <src/Editor/TestLayer.h>
 #include <src/EngineTime.h>
 #include <src/Events/Event.h>
 #include <src/Events/EventBuffer.h>
+#include <src/Inputs/Input.h>
 #include <src/Layers/Layer.h>
 #include <src/Layers/LayerList.h>
-#include <src/Editor/TestLayer.h>
 
 namespace SOUP {
 
@@ -28,7 +30,6 @@ namespace SOUP {
 
     pushLayer(m_GUI);
     pushLayer(new Test());
-
   }
 
   Application::~Application() {}
@@ -44,6 +45,8 @@ namespace SOUP {
 
       LOG_INFO("Current Time {}", currentTime);
       LOG_INFO("Polling...");
+
+      m_input.begin();
       SDL_Event eventFromSDL;
       while (SDL_PollEvent(&eventFromSDL)) {
         ImGui_ImplSDL3_ProcessEvent(&eventFromSDL);
@@ -63,15 +66,18 @@ namespace SOUP {
       m_GUI->begin();
 
       LOG_INFO("updating layers...");
+      Input::bind(&m_input);
       for (auto &layer : m_layerList) {
         layer->onUpdate(dt);
       }
+      Input::unbind();
 
       LOG_INFO("done updating layers");
 
       m_GUI->end();
 
       LOG_INFO("updating window...");
+      m_input.end();
       m_window->onUpdate();
       LOG_INFO("updated window");
       // for each layer in layer list, render layer
@@ -86,6 +92,10 @@ namespace SOUP {
         m_isRunning = false;
         return true;
       }
+    }
+
+    if (event.header.type == EventType::WindowLostFocus) {
+      m_input.reset();
     }
     return false;
   }
