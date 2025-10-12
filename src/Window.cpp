@@ -43,6 +43,7 @@ namespace SOUP {
     }
 
     LOG_INFO("OpenGL context initialized");
+    setVsync(false);
   }
 
   Window::~Window() { shutdown(); }

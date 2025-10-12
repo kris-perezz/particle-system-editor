@@ -19,7 +19,7 @@ namespace SOUP {
 
     m_vbo->setLayout({
         {ShaderDataType::Float2, "a_Position"},
-        {ShaderDataType::Float4, "a_Color"   },
+        {ShaderDataType::Float4, "a_Color"   }
     });
 
     m_vao->addVertexBuffer(m_vbo);

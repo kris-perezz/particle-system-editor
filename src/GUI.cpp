@@ -44,7 +44,7 @@ namespace SOUP {
 
   void GUI::onUpdate(DeltaTime deltaTime) {
     //LOG_INFO("on update imgui");
-    //ImGui::ShowDemoWindow(); // This will show the ImGui demo window
+    ImGui::ShowDemoWindow(); // This will show the ImGui demo window
     //OG_INFO("show");
   }
 
