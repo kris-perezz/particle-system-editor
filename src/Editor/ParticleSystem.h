@@ -3,6 +3,7 @@
 #include "DeltaTime.h"
 #include "Renderer/Shader.h"
 #include "Renderer/VertexArray.h"
+#include <cstdint>
 #include <src/SOUP_pch.h>
 
 namespace SOUP {
@@ -41,19 +42,17 @@ namespace SOUP {
 
     void update(DeltaTime deltaTime);
 
-    // Uploads the whole quad vertex buffer (degenerate for dead slots)
     void upload();
+    void clear();
 
-    // Access for Renderer::submit(shader, vao)
     const std::shared_ptr<VertexArray> &vao() const { return m_vao; }
     std::shared_ptr<Shader> &shader() { return m_shader; }
 
-    // Optional: query pool size
     size_t capacity() const { return m_max; }
 
   private:
     size_t m_max{0};
-    uint32_t m_alive{0};
+    int32_t m_alive{0};
     std::vector<Particle> m_pool;
     size_t m_poolIndex{0};             // ring index
 

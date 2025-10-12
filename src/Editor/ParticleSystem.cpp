@@ -24,7 +24,6 @@ namespace SOUP {
 
     m_vao->addVertexBuffer(m_vbo);
 
-   
     std::vector<uint32_t> indices;
     indices.reserve(m_max * 6);
     for (uint32_t i = 0; i < m_max; ++i) {
@@ -69,7 +68,7 @@ namespace SOUP {
 
   void ParticleSystem::update(DeltaTime deltaTime) {
     float deltaTimef = deltaTime.seconds();
-    m_alive   = 0;
+    m_alive          = 0;
 
     for (auto &p : m_pool) {
       if (!p.active) {
@@ -101,8 +100,16 @@ namespace SOUP {
   }
 
   void ParticleSystem::upload() {
+    const uint32_t bytes = m_alive * 4 * sizeof(QuadVertex);
     m_vbo->bind();
-    m_vbo->setData(m_cpuQuad.data(), static_cast<uint32_t>(m_cpuQuad.size() * sizeof(QuadVertex)));
+    m_vbo->setData(m_cpuQuad.data(), bytes);
+    m_ibo->setCount(m_alive * 6); // key line
+  }
+  void ParticleSystem::clear() {
+    for (auto &p : m_pool)
+      p.active = false;
+
+    m_alive = 0;
   }
 
 } // namespace SOUP

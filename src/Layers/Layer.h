@@ -16,6 +16,8 @@ namespace SOUP {
     virtual void onUpdate(DeltaTime deltaTime) {}
     virtual bool onEvent(const Event &event) = 0;
 
+    virtual void onGUIRender() {}
+
     int getPriority() const;
 
   protected:

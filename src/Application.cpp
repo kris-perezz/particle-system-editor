@@ -77,6 +77,12 @@ namespace SOUP {
       for (auto &layer : m_layerList) {
         layer->onUpdate(dt);
       }
+      
+      
+      for (auto &layer : m_layerList) {
+        layer->onGUIRender();
+      }
+      
       Input::unbind();
 
       LOG_INFO("done updating layers");

@@ -43,19 +43,19 @@ namespace SOUP {
   }
 
   void GUI::onUpdate(DeltaTime deltaTime) {
-    LOG_INFO("on update imgui");
-    ImGui::ShowDemoWindow(); // This will show the ImGui demo window
-    LOG_INFO("show");
+    //LOG_INFO("on update imgui");
+    //ImGui::ShowDemoWindow(); // This will show the ImGui demo window
+    //OG_INFO("show");
   }
 
   bool GUI::onEvent(const Event &event) { return false; }
 
   void GUI::begin() {
-    LOG_INFO("new frame");
+    //LOG_INFO("new frame");
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
-    LOG_INFO("Done begin frame");
+    //LOG_INFO("Done begin frame");
   }
 
   void GUI::end() {
