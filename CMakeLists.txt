@@ -73,7 +73,9 @@ set(SOUP_HEADER
     src/EngineTime.h
     src/Camera.h
     src/CameraController.h
-    src/Editor/TestLayer.h)
+    src/Editor/TestLayer.h
+    src/Editor/ParticleSystem.h
+    src/Editor/ParticleTestLayer.h)
 
 
 set(SOUP_SOURCE
@@ -96,7 +98,9 @@ set(SOUP_SOURCE
     src/Log.cpp
     src/Camera.cpp
     src/CameraController.cpp
-    src/Editor/TestLayer.cpp)
+    src/Editor/TestLayer.cpp
+    src/Editor/ParticleSystem.cpp
+    src/Editor/ParticleTestLayer.cpp)
 
 add_subdirectory(include/glad)
 add_subdirectory(include/imgui)

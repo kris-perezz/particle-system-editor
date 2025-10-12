@@ -1,3 +1,5 @@
+#include "Editor/ParticleSystem.h"
+#include "Editor/ParticleTestLayer.h"
 #include "Inputs/InputSystem.h"
 #include "Renderer/RenderCommand.h"
 #include "imgui_impl_sdl3.h"
@@ -33,7 +35,8 @@ namespace SOUP {
     m_GUI = new GUI;
 
     pushLayer(m_GUI);
-    pushLayer(new Test());
+    //pushLayer(new Test());
+    pushLayer(new ParticleTestLayer());
   }
 
   Application::~Application() {}
