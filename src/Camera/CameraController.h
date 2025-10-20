@@ -1,7 +1,7 @@
 #pragma once
 
-#include "DeltaTime.h"
-#include <src/Camera.h>
+#include <src/Camera/Camera.h>
+#include <Core/DeltaTime.h>
 #include <src/Events/Event.h>
 #include <src/Inputs/Input.h>
 #include <src/SOUP_pch.h>

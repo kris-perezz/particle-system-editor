@@ -1,9 +1,8 @@
-#include "ParticleSystem.h"
-
+#include <src/Particles/ParticleSystem.h>
 #include <src/Renderer/RenderCommand.h>
 
 namespace SOUP {
- ParticleSystem::ParticleSystem(size_t maxParticles) : m_max(maxParticles) {
+  ParticleSystem::ParticleSystem(size_t maxParticles) : m_max(maxParticles) {
     // std::vector<glm::vec2> positions;
     // std::vector<glm::vec2> velocities;
     // std::vector<glm::vec2> sizeBegin;
@@ -44,7 +43,7 @@ namespace SOUP {
     m_cpuQuad.resize(m_max * 4);
 
     // geometry setup
-     m_vao = std::make_shared<VertexArray>();
+    m_vao = std::make_shared<VertexArray>();
 
     // Dynamic vertex buffer (positions + colors), sized for the full pool
     m_vbo = std::make_shared<VertexBuffer>(
@@ -68,7 +67,7 @@ namespace SOUP {
       indices.push_back(b + 3);
       indices.push_back(b + 0);
     }
-      m_ibo = std::make_shared<IndexBuffer>(indices.data(), static_cast<uint32_t>(indices.size()));
+    m_ibo = std::make_shared<IndexBuffer>(indices.data(), static_cast<uint32_t>(indices.size()));
     m_vao->setIndexBuffer(m_ibo);
 
     m_shader = std::make_shared<Shader>("data/particle.vert", "data/particle.frag");

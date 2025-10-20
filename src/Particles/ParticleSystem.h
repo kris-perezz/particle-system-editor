@@ -1,12 +1,12 @@
 #pragma once
 #define GLM_ENABLE_EXPERIMENTAL
-#include "Camera.h"
-#include "DeltaTime.h"
-#include "Renderer/Shader.h"
-#include "Renderer/VertexArray.h"
 #include "glm/gtc/random.hpp"
 #include <cstdint>
 #include <glm/gtx/rotate_vector.hpp>
+#include <src/Camera/Camera.h>
+#include <src/Core/DeltaTime.h>
+#include <src/Renderer/Shader.h>
+#include <src/Renderer/VertexArray.h>
 #include <src/SOUP_pch.h>
 
 namespace SOUP {

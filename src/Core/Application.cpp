@@ -1,17 +1,17 @@
-#include "Editor/ParticleSystem.h"
-#include "Editor/ParticleTestLayer.h"
-#include "Inputs/InputSystem.h"
-#include "Renderer/RenderCommand.h"
 #include "imgui_impl_sdl3.h"
-#include <src/Application.h>
-#include <src/DeltaTime.h>
+#include <src/Core/Application.h>
+#include <src/Core/DeltaTime.h>
+#include <src/Core/EngineTime.h>
+#include <src/Editor/ParticleTestLayer.h>
 #include <src/Editor/TestLayer.h>
-#include <src/EngineTime.h>
 #include <src/Events/Event.h>
 #include <src/Events/EventBuffer.h>
 #include <src/Inputs/Input.h>
+#include <src/Inputs/InputSystem.h>
 #include <src/Layers/Layer.h>
 #include <src/Layers/LayerList.h>
+#include <src/Particles/ParticleSystem.h>
+#include <src/Renderer/RenderCommand.h>
 
 namespace SOUP {
 
@@ -35,7 +35,7 @@ namespace SOUP {
     m_GUI = new GUI;
 
     pushLayer(m_GUI);
-    //pushLayer(new Test());
+    // pushLayer(new Test());
     pushLayer(new ParticleTestLayer());
   }
 
@@ -77,12 +77,11 @@ namespace SOUP {
       for (auto &layer : m_layerList) {
         layer->onUpdate(dt);
       }
-      
-      
+
       for (auto &layer : m_layerList) {
         layer->onGUIRender();
       }
-      
+
       Input::unbind();
 
       LOG_TRACE("done updating layers");
@@ -145,9 +144,8 @@ namespace SOUP {
   Application &Application::get() { return *s_Instance; }
 
   Window &Application::getWindow() { return *m_window; }
-  
-  bool Application::onWindowResize(const Event &event)
-  {
+
+  bool Application::onWindowResize(const Event &event) {
     RenderCommand::setViewport(m_window->getPixelDimensions().x, m_window->getPixelDimensions().y);
     return false;
   }

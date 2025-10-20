@@ -47,60 +47,41 @@ FetchContent_MakeAvailable(spdlog)
 
 find_package(OpenGL REQUIRED)
 
+include(src/Core/CMakeLists.txt)
+include(src/Camera/CMakeLists.txt)
+include(src/Editor/CMakeLists.txt)
+include(src/Events/CMakeLists.txt)
+include(src/GUI/CMakeLists.txt)
+include(src/Inputs/CMakeLists.txt)
+include(src/Layers/CMakeLists.txt)
+include(src/Particles/CMakeLists.txt)
+include(src/Renderer/CMakeLists.txt)
+include(src/Utility/CMakeLists.txt)
 
 set(SOUP_HEADER 
-    src/Renderer/Buffer.h
-    src/Renderer/Renderer.h
-    src/Renderer/RenderCommand.h
-    src/Renderer/Shader.h
-    src/Renderer/VertexArray.h
-    src/Layers/Layer.h
-    src/Layers/LayerList.h
-    src/Application.h
-    src/Events/Event.h
-    src/Events/EventBuffer.h
-    src/Events/Events.h
-    src/Inputs/Input.h
-    src/Inputs/InputSystem.h
-    src/Inputs/KeyCodes.h
-    src/Inputs/MouseCodes.h
-    src/GUI.h
-    src/Style.h
-    src/Window.h
-    src/Log.h
-    src/Timer.h
-    src/DeltaTime.h
-    src/EngineTime.h
-    src/Camera.h
-    src/CameraController.h
-    src/Editor/TestLayer.h
-    src/Editor/ParticleSystem.h
-    src/Editor/ParticleTestLayer.h)
+    ${SOUP_CORE_HEADER}
+    ${SOUP_RENDERER_HEADER}
+    ${SOUP_LAYER_HEADER}
+    ${SOUP_EVENT_HEADER}
+    ${SOUP_INPUT_HEADER}
+    ${SOUP_PARTICLES_HEADER}
+    ${SOUP_UTILITY_HEADER}
+    ${SOUP_CAMERA_HEADER}
+    ${SOUP_GUI_HEADER}
+    ${SOUP_EDITOR_HEADER})
 
 
 set(SOUP_SOURCE
-    src/Renderer/Buffer.cpp
-    src/Renderer/Renderer.cpp
-    src/Renderer/RenderCommand.cpp
-    src/Renderer/Shader.cpp
-    src/Renderer/VertexArray.cpp
-    src/Layers/Layer.cpp
-    src/Layers/LayerList.cpp
-    src/Events/Event.cpp
-    src/Events/EventBuffer.cpp
-    src/Events/Events.cpp
-    src/Inputs/Input.cpp
-    src/Inputs/InputSystem.cpp
-    src/Application.cpp
-    src/GUI.cpp
-    src/Style.cpp
-    src/Window.cpp
-    src/Log.cpp
-    src/Camera.cpp
-    src/CameraController.cpp
-    src/Editor/TestLayer.cpp
-    src/Editor/ParticleSystem.cpp
-    src/Editor/ParticleTestLayer.cpp)
+    ${SOUP_CORE_SRC}
+    ${SOUP_RENDERER_SRC}
+    ${SOUP_LAYER_SRC}
+    ${SOUP_EVENT_SRC}
+    ${SOUP_INPUT_SRC}
+    ${SOUP_PARTICLES_SRC}
+    ${SOUP_UTILITY_SRC}
+    ${SOUP_CAMERA_SRC}
+    ${SOUP_GUI_SRC}
+    ${SOUP_EDITOR_SRC})
 
 add_subdirectory(include/glad)
 add_subdirectory(include/imgui)

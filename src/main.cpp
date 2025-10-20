@@ -1,12 +1,12 @@
 #include <src/SOUP_pch.h>
 
-#include "Application.h"
 #include <src/Events/Event.h>
 #include <src/Renderer/Buffer.h>
 #include <src/Renderer/Renderer.h>
 #include <src/Renderer/Shader.h>
 #include <src/Renderer/VertexArray.h>
-#include <src/Window.h>
+#include <src/Core/Window.h>
+#include <src/Core/Application.h>
 #include <type_traits>
 
 int main(int argc, char **argv) {

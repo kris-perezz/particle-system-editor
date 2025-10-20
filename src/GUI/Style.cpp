@@ -1,4 +1,4 @@
-#include <src/Style.h>
+#include <src/GUI/Style.h>
 
 namespace SOUP {
   void showHelpMarker(const char *message) {

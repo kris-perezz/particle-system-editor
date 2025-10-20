@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DeltaTime.h"
+#include <src/Core/DeltaTime.h>
 #include <src/SOUP_pch.h>
 
 #include <src/Events/Events.h>

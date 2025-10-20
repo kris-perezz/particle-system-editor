@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Events/Event.h"
-#include "Events/Events.h"
-#include "Log.h"
 #include "glm/fwd.hpp"
+#include <src/Events/Event.h>
+#include <src/Events/Events.h>
 #include <src/SOUP_pch.h>
 
 namespace SOUP {
@@ -15,8 +14,8 @@ namespace SOUP {
     bool fullscreen;
 
     WindowProperties(const std::string title = "Particle System Editor",
-                     int width          = 1280,
-                     int height         = 720,
+                     int width               = 1280,
+                     int height              = 720,
                      bool vsync              = false,
                      bool fullscreen         = false) {
       this->title      = title;
@@ -48,7 +47,7 @@ namespace SOUP {
 
     SDL_Window *getSDLWindow();
     SDL_GLContext getContext() const;
-    
+
   private:
     void init(const WindowProperties &properties);
 

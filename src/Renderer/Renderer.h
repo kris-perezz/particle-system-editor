@@ -1,4 +1,4 @@
-#include <src/Camera.h>
+#include <src/Camera/Camera.h>
 #include <src/Renderer/Shader.h>
 #include <src/Renderer/VertexArray.h>
 #include <src/SOUP_pch.h>

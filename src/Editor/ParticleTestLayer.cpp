@@ -1,9 +1,9 @@
-#include "ParticleTestLayer.h"
-#include "Events/Event.h"
-#include "Style.h"
 #include "imgui.h"
 #include <glm/gtc/random.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include <src/Editor/ParticleTestLayer.h>
+#include <src/Events/Event.h>
+#include <src/GUI/Style.h>
 #include <src/Renderer/RenderCommand.h>
 #include <src/Renderer/Renderer.h>
 
@@ -311,37 +311,37 @@ namespace SOUP {
           (m_stats.frames > 0) ? ((double)m_stats.total_draw_calls / (double)m_stats.frames) : 0.0;
 
       LOG_INFO(" Duration (s): {}\n"
-                   " Average FPS: {:.1f}\n"
-                   " Frames (total): {}\n"
-                   " Frame time (avg): {:.2f} ms\n"
-                   " Frame time (min): {:.2f} ms\n"
-                   " Frame time (max): {:.2f} ms\n"
-                   " Alive particles (avg): {:.1f}\n"
-                   "Alive particles (peak): {}\n"
-                   " Achieved spawn (p/s): {:.1f}\n"
-                   " Lifetime (s): {:.1f}\n"
-                   " Target Spawn Rate (p/s): {}\n"
-                   " Draw Calls per second: {:.2f}\n"
-                   " Draw Calls per frame: {:.2f}\n"
-                   " Draw Calls last frame: {}\n"
-                   " Draw Calls total: {}\n"
-                   " GPU: {}",
-                   (int)m_stats.window_sec,
-                   avg_fps,
-                   m_stats.frames,
-                   avg_ms,
-                   min_ms,
-                   max_ms,
-                   avg_alive,
-                   m_stats.peak_alive,
-                   achieved_spawn_ps,
-                   m_particleEmitter.props.lifeTime,
-                   (int)m_particleEmitter.spawnRate,
-                   dps,
-                   dpf,
-                   m_stats.last_draw_calls,
-                   (uint64_t)m_stats.total_draw_calls,
-                   m_stats.gpu_name.c_str());
+               " Average FPS: {:.1f}\n"
+               " Frames (total): {}\n"
+               " Frame time (avg): {:.2f} ms\n"
+               " Frame time (min): {:.2f} ms\n"
+               " Frame time (max): {:.2f} ms\n"
+               " Alive particles (avg): {:.1f}\n"
+               "Alive particles (peak): {}\n"
+               " Achieved spawn (p/s): {:.1f}\n"
+               " Lifetime (s): {:.1f}\n"
+               " Target Spawn Rate (p/s): {}\n"
+               " Draw Calls per second: {:.2f}\n"
+               " Draw Calls per frame: {:.2f}\n"
+               " Draw Calls last frame: {}\n"
+               " Draw Calls total: {}\n"
+               " GPU: {}",
+               (int)m_stats.window_sec,
+               avg_fps,
+               m_stats.frames,
+               avg_ms,
+               min_ms,
+               max_ms,
+               avg_alive,
+               m_stats.peak_alive,
+               achieved_spawn_ps,
+               m_particleEmitter.props.lifeTime,
+               (int)m_particleEmitter.spawnRate,
+               dps,
+               dpf,
+               m_stats.last_draw_calls,
+               (uint64_t)m_stats.total_draw_calls,
+               m_stats.gpu_name.c_str());
 
       m_stats.active = false;
     }

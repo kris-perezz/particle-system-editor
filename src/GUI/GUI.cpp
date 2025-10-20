@@ -1,17 +1,14 @@
 
-#include <src/Application.h>
-#include <src/GUI.h>
-
-#include "Events/Event.h"
-
 #include <SDL3/SDL_video.h>
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_opengl3.h>
 #include <imgui/imgui_impl_sdl3.h>
 #include <imgui/imgui_internal.h>
-
-#include <src/Camera.h>
-#include <src/Style.h>
+#include <src/Camera/Camera.h>
+#include <src/Core/Application.h>
+#include <src/Events/Event.h>
+#include <src/GUI/GUI.h>
+#include <src/GUI/Style.h>
 
 namespace SOUP {
   void GUI::onAttach() {
@@ -43,19 +40,19 @@ namespace SOUP {
   }
 
   void GUI::onUpdate(DeltaTime deltaTime) {
-    //LOG_INFO("on update imgui");
-    //ImGui::ShowDemoWindow(); // This will show the ImGui demo window
-    //OG_INFO("show");
+    // LOG_INFO("on update imgui");
+    // ImGui::ShowDemoWindow(); // This will show the ImGui demo window
+    // OG_INFO("show");
   }
 
   bool GUI::onEvent(const Event &event) { return false; }
 
   void GUI::begin() {
-    //LOG_INFO("new frame");
+    // LOG_INFO("new frame");
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplSDL3_NewFrame();
     ImGui::NewFrame();
-    //LOG_INFO("Done begin frame");
+    // LOG_INFO("Done begin frame");
   }
 
   void GUI::end() {

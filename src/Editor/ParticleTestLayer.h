@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Camera.h"
-#include "CameraController.h"
-#include "Editor/ParticleSystem.h"
-#include "Layers/Layer.h"
+#include <src/Camera/Camera.h>
+#include <src/Camera/CameraController.h>
+#include <src/Layers/Layer.h>
+#include <src/Particles/ParticleSystem.h>
 #include <src/SOUP_pch.h>
 
 namespace SOUP {
- class ParticleTestLayer : public Layer {
+  class ParticleTestLayer : public Layer {
   public:
     ParticleTestLayer()
         : Layer(50), m_camera(CameraType::Orthographic), m_cameraController(m_camera) {}

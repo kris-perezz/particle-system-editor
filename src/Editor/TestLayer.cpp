@@ -1,20 +1,15 @@
-
-#include <src/Application.h>
-#include <src/GUI.h>
-
-#include <src/Editor/TestLayer.h>
-
-#include "Renderer/Buffer.h"
-#include "Renderer/Renderer.h"
-#include "Renderer/Shader.h"
-#include <Events/Event.h>
-#include <Renderer/RenderCommand.h>
 #include <SDL3/SDL_video.h>
-
+#include <src/Camera/Camera.h>
+#include <src/Camera/CameraController.h>
+#include <src/Core/Application.h>
+#include <src/Editor/TestLayer.h>
+#include <src/Events/Event.h>
+#include <src/GUI/GUI.h>
 #include <src/Inputs/Input.h>
-
-#include <src/Camera.h>
-#include <src/CameraController.h>
+#include <src/Renderer/Buffer.h>
+#include <src/Renderer/RenderCommand.h>
+#include <src/Renderer/Renderer.h>
+#include <src/Renderer/Shader.h>
 
 namespace SOUP {
   void Test::onAttach() {
@@ -65,7 +60,6 @@ namespace SOUP {
     m_cameraPosition = {0.2f, 0.2f, 0.2f};
     m_camera.setPosition(m_cameraPosition);
     m_camera.setSpeed(5.0f);
-
   }
 
   void Test::onDetach() {}
@@ -81,14 +75,14 @@ namespace SOUP {
 
     LOG_INFO("cleared viewport");
 
-
     // Draw triangle
     Renderer::submit(shader, vao);
     LOG_INFO("drawed Index");
   }
 
-  bool Test::onEvent(const Event &event) { 
+  bool Test::onEvent(const Event &event) {
     m_cameraController.onEvent(event);
-    return false; }
+    return false;
+  }
 
 } // namespace SOUP

@@ -1,5 +1,5 @@
 #include "spdlog/common.h"
-#include <src/Log.h>
+#include <src/Utility/Log.h>
 
 namespace SOUP {
 void Log::init() {

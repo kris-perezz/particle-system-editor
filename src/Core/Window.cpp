@@ -1,6 +1,6 @@
-#include "Events/Event.h"
 #include <SDL3/SDL_video.h>
-#include <src/Window.h>
+#include <src/Events/Event.h>
+#include <src/Core/Window.h>
 
 namespace SOUP {
   Window::Window(const WindowProperties &properties) { init(properties); }

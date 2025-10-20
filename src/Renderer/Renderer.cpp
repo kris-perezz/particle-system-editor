@@ -1,5 +1,5 @@
-#include <Renderer/RenderCommand.h>
-#include <src/Camera.h>
+#include <src/Renderer/RenderCommand.h>
+#include <src/Camera/Camera.h>
 #include <src/Renderer/Renderer.h>
 
 namespace SOUP {

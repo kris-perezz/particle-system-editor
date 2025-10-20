@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Inputs/InputSystem.h"
+#include <src/Inputs/InputSystem.h>
 #include <src/SOUP_pch.h>
 
 #include <src/Events/Event.h>
@@ -9,8 +9,8 @@
 
 #include <src/Layers/Layer.h>
 #include <src/Layers/LayerList.h>
-#include <src/Window.h>
-#include <src/GUI.h>
+#include <src/Core/Window.h>
+#include <src/GUI/GUI.h>
 
 namespace SOUP {
   class Application : public EventListener {

@@ -1,18 +1,17 @@
 #pragma once
 
-#include "CameraController.h"
-#include "Renderer/Shader.h"
-#include "Renderer/VertexArray.h"
-#include <src/SOUP_pch.h>
-
 #include <imgui.h>
+#include <src/Camera/Camera.h>
+#include <src/Camera/CameraController.h>
 #include <src/Layers/Layer.h>
-#include <src/Camera.h>
+#include <src/Renderer/Shader.h>
+#include <src/Renderer/VertexArray.h>
+#include <src/SOUP_pch.h>
 
 namespace SOUP {
   class Test : public Layer {
   public:
-    Test() : Layer(50), m_camera(CameraType::Orthographic), m_cameraController(m_camera){}
+    Test() : Layer(50), m_camera(CameraType::Orthographic), m_cameraController(m_camera) {}
     ~Test() = default;
     void onAttach() override;
     void onDetach() override;

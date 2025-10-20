@@ -1,5 +1,5 @@
-#include "CameraController.h"
-#include "Events/Event.h"
+#include <src/Camera/CameraController.h>
+#include <src/Events/Event.h>
 
 namespace SOUP {
   CameraController::CameraController(Camera &camera) : m_camera(camera) {
