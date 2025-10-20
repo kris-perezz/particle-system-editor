@@ -1,3 +1,4 @@
+#include "spdlog/common.h"
 #include <src/Log.h>
 
 namespace SOUP {
@@ -6,7 +7,7 @@ void Log::init() {
   console->set_pattern("[%Y-%m-%d %H:%M:%S] [%^%l%$] %v");
 
   auto logger = std::make_shared<spdlog::logger>("Log", console);
-  logger->set_level(spdlog::level::trace);
+  logger->set_level(spdlog::level::debug);
   spdlog::set_default_logger(logger);
 }
 }; // namespace SOUP

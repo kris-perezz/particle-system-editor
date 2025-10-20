@@ -52,7 +52,7 @@ void VertexArray::addVertexBuffer(const std::shared_ptr<VertexBuffer> &vertexBuf
                           layout.getStride(), 
                           (const void *)element.offset);
                           
-    LOG_INFO("index:{}, component count: {}, type:{}, normalized;{}, stride:{}, offset:{}",
+    LOG_TRACE("index:{}, component count: {}, type:{}, normalized;{}, stride:{}, offset:{}",
              index, element.GetComponentCount(), ShaderDataTypeToBaseType(element.type), element.isNormalized,
              layout.getStride(), (const void *)element.offset);
     index++;

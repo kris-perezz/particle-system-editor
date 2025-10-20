@@ -132,14 +132,14 @@ namespace SOUP {
   }
 
   Shader::~Shader() {
-    LOG_INFO("Shader deconstructed");
+    LOG_TRACE("Shader deconstructed");
     glDeleteProgram(m_rendererID);
   }
 
   void Shader::bind() const { glUseProgram(m_rendererID); }
 
   void Shader::unBind() const {
-    LOG_INFO("Shader unbinded");
+    LOG_TRACE("Shader unbinded");
     glUseProgram(0);
   }
   void Shader::uploadUniformMat4(const std::string &name, const glm::mat4 &matrix) {

@@ -21,7 +21,7 @@ namespace SOUP {
     s_Instance = this;
 
     Log::init();
-    LOG_INFO("Logger works?");
+    LOG_TRACE("Logger works?");
 
     m_eventsDispatcher.registerListener(this);
 
@@ -42,7 +42,7 @@ namespace SOUP {
   Application::~Application() {}
 
   void Application::run() {
-    LOG_INFO("Running application");
+    LOG_TRACE("Running application");
 
     while (m_isRunning) {
       float currentTime = EngineTime::getTime();
@@ -50,8 +50,8 @@ namespace SOUP {
       DeltaTime dt   = currentTime - m_previousTime;
       m_previousTime = currentTime;
 
-      LOG_INFO("Current Time {}", currentTime);
-      LOG_INFO("Polling...");
+      LOG_TRACE("Current Time {}", currentTime);
+      LOG_TRACE("Polling...");
 
       m_input.begin();
       SDL_Event eventFromSDL;
@@ -64,15 +64,15 @@ namespace SOUP {
         }
       }
 
-      LOG_INFO("Dispatching...");
+      LOG_TRACE("Dispatching...");
       while (!m_eventBuffer.isEmpty()) {
         m_eventsDispatcher.dispatch(m_eventBuffer.dequeue());
       }
-      LOG_INFO("Done dispatching");
+      LOG_TRACE("Done dispatching");
 
       m_GUI->begin();
 
-      LOG_INFO("updating layers...");
+      LOG_TRACE("updating layers...");
       Input::bind(&m_input);
       for (auto &layer : m_layerList) {
         layer->onUpdate(dt);
@@ -85,14 +85,14 @@ namespace SOUP {
       
       Input::unbind();
 
-      LOG_INFO("done updating layers");
+      LOG_TRACE("done updating layers");
 
       m_GUI->end();
 
-      LOG_INFO("updating window...");
+      LOG_TRACE("updating window...");
       m_input.end();
       m_window->onUpdate();
-      LOG_INFO("updated window");
+      LOG_TRACE("updated window");
       // for each layer in layer list, render layer
     };
   }

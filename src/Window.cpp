@@ -23,26 +23,26 @@ namespace SOUP {
                                 m_windowProperties.height,
                                 flags);
 
-    LOG_INFO("Creating window");
+    LOG_TRACE("Creating window");
     if (!m_window) {
-      LOG_INFO("Failed to create SDL3 window: {}", SDL_GetError());
+      LOG_TRACE("Failed to create SDL3 window: {}", SDL_GetError());
       throw std::runtime_error(std::string("Error: SDL_CreateWindow(): ") + SDL_GetError());
     }
 
-    LOG_INFO("Creating context");
+    LOG_TRACE("Creating context");
     m_context = SDL_GL_CreateContext(m_window);
     if (!m_context) {
-      LOG_INFO("Failed to create OpenGL context: {}", SDL_GetError());
+      LOG_TRACE("Failed to create OpenGL context: {}", SDL_GetError());
       throw std::runtime_error(std::string("Error: SDL_GL_CreateContext(): ") + SDL_GetError());
     }
 
-    LOG_INFO("Loading GLAD");
+    LOG_TRACE("Loading GLAD");
     if (!gladLoadGL((GLADloadfunc)SDL_GL_GetProcAddress)) {
       LOG_ERROR("gladLoadGL failed");
       throw std::runtime_error("Error: gladLoadGL failed");
     }
 
-    LOG_INFO("OpenGL context initialized");
+    LOG_TRACE("OpenGL context initialized");
     setVsync(false);
   }
 
@@ -51,9 +51,9 @@ namespace SOUP {
   void Window::shutdown() {
     SDL_GL_DestroyContext(m_context);
     SDL_DestroyWindow(m_window);
-    LOG_INFO("Destroyed window");
+    LOG_TRACE("Destroyed window");
     SDL_Quit();
-    LOG_INFO("SDL Quit");
+    LOG_TRACE("SDL Quit");
   }
 
   bool Window::onEvent(const Event &event) {
@@ -97,7 +97,7 @@ namespace SOUP {
     m_windowProperties.width = newWidth;
     m_windowProperties.width = newHeight;
 
-    LOG_INFO("Resized window");
+    LOG_TRACE("Resized window");
     return false;
   }
 
